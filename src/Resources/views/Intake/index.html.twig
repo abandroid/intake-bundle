@@ -5,7 +5,7 @@
 {% block content %}
 
     {% for intake in intakes %}
-        <a href="{{ path('intake_intake_show', { intake: intake.id }) }}" class="btn btn-default">{{ intake.name }}</a>
+        <a href="{{ path('endroid_intake_intake_show', { intake: intake.id }) }}" class="btn btn-default">{{ intake.name }}</a>
     {% endfor %}
 
 {% endblock %}
