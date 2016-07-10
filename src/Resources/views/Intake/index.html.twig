@@ -1,0 +1,11 @@
+{% extends 'EndroidIntakeBundle::base.html.twig' %}
+
+{% block title %}Intakes{% endblock %}
+
+{% block content %}
+
+    {% for intake in intakes %}
+        <a href="{{ path('intake_intake_show', { intake: intake.id }) }}" class="btn btn-default">{{ intake.name }}</a>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+groups:
+    group_intakeadmin:
+        name: Intake administrators
+        roles: [ ROLE_INTAKE_ADMIN ]
+    group_intake:
+        name: Intake users
+        roles: [ ROLE_INTAKE ]
+
+users:
+    user_intakeadmin:
+        username: intakeadmin
+        email: intakeadmin@example.com
+        groups: [ group_intakeadmin ]
+        enabled: true
+        password: intakeadmin
+    user_intake:
+        username: intake
+        email: intake@example.com
+        groups: [ group_intake ]
+        enabled: true
+        password: intake

@@ -1,0 +1,5 @@
+translations:
+    level_intro: U ziet {count} teksten. Vul steeds één woord in op de open plek.
+    level_completed: Uw antwoorden zijn opgeslagen. U krijgt nog {count} teksten.
+    level_completed_extra: Uw antwoorden zijn opgeslagen. U krijgt nu aanvulzinnen.
+    level_extra_intro: Maak de zinnen compleet. U hoeft steeds maar één zin te schrijven.

@@ -1,0 +1,78 @@
+{% extends 'EndroidIntakeBundle::base.html.twig' %}
+
+{% block intake_title %}{{ intake.name }}{% endblock %}
+
+{% block content %}
+
+    <style>
+        input[type="text"] {
+            text-align: center;
+            border: 0;
+            border-bottom: 1px dashed #555;
+        }
+        h1 {
+            padding-bottom: 10px;
+        }
+        .text {
+            padding-bottom: 15px;
+        }
+        button {
+            padding-top: 5px;
+        }
+    </style>
+
+    <script>
+        function submitForm() {
+            return confirm('Weet je het zeker?');
+        }
+    </script>
+
+    <div>
+        {% set break = false %}
+        {% for level in intake.levels if not break %}
+            {% if not level.completed(app.user) %}
+                {# If level is not completed show questions #}
+                <form id="intakeForm" method="post" onsubmit="submitForm();">
+                    {% for text in level.texts %}
+                        <div class="text">
+                            <h1><span class="label label-default">Tekst {{ loop.index }}: {{ text.title }}</span></h1>
+                            <p>
+                                {% for part in text.parts %}
+                                    {% if part.type == 'question' %}
+                                        {% set answer = part.answer(app.user) %}
+                                        <input type="text" name="answers[{{ part.id }}]" value="{% if answer %}{{ answer.content }}{% endif %}" />
+                                    {% elseif part.type == 'text' %}
+                                        {{ part.content }}
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    {% else %}
+                    {% endfor %}
+                    <div class="text">
+                        <button type="submit" class="btn btn-default">Opslaan</button>
+                    </div>
+                </form>
+                {% set break = true %}
+
+            {% else %}
+
+                {% if level.score(app.user) < 22 %}
+                    {# Completed with 7 or more errors: this was the last level #}
+                    {% set break = true %}
+                    <div class="text">
+                        Toets afgerond.
+                    </div>
+                    {% if level.score(app.user) > 21 %}
+                        {# Completed with 7 or 8 errors: perform additional test #}
+                        <div class="text">
+                            Extra vragen.
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

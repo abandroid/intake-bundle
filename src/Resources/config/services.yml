@@ -1,0 +1,24 @@
+services:
+    intake.admin.level_admin:
+        class: Endroid\Bundle\IntakeBundle\Admin\LevelAdmin
+        arguments: [ null, Endroid\Bundle\IntakeBundle\Entity\Level, null]
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Intake, label: Levels }
+
+    test.admin.text_admin:
+        class: Endroid\Bundle\IntakeBundle\Admin\TextAdmin
+        arguments: [ null, Endroid\Bundle\IntakeBundle\Entity\Text, null]
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Intake, label: Texts, show_in_dashboard: false }
+
+    test.admin.extra_admin:
+        class: Endroid\Bundle\IntakeBundle\Admin\ExtraAdmin
+        arguments: [ null, Endroid\Bundle\IntakeBundle\Entity\Extra, null]
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Intake, label: Extras, show_in_dashboard: false }
