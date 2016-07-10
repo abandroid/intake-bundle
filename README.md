@@ -41,6 +41,17 @@ public function registerBundles()
 }
 ```
 
+## Routing
+
+Add the following section to your routing to be able to visit intake URLs.
+
+``` yml
+EndroidIntakeBundle:
+    resource: "@EndroidIntakeBundle/Controller/"
+    type:     annotation
+    prefix:   /intake
+```
+
 ## Versioning
 
 Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatible
