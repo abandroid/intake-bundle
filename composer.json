@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Endroid\\Bundle\\Endroid\\Bundle\\IntakeBundle\\": "src/"
+            "Endroid\\Bundle\\IntakeBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Endroid\\Bundle\\Endroid\\Bundle\\IntakeBundle\\": "tests/"
+            "Endroid\\Bundle\\IntakeBundle\\": "tests/"
         }
     },
     "config": {
