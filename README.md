@@ -9,7 +9,8 @@ Intake Bundle
 [![Total Downloads](http://img.shields.io/packagist/dt/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
 [![License](http://img.shields.io/packagist/l/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
 
-Bundle description.
+Allows creation, administration and submission of intakes to determine if a
+user masters a language at a specific level.
 
 [![knpbundles.com](http://knpbundles.com/endroid/EndroidIntakeBundle/badge-short)](http://knpbundles.com/endroid/EndroidIntakeBundle)
 
