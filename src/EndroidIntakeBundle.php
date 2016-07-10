@@ -11,6 +11,6 @@ namespace Endroid\Bundle\IntakeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class IntakeBundle extends Bundle
+class EndroidIntakeBundle extends Bundle
 {
 }
