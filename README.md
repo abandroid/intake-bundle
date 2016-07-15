@@ -5,8 +5,8 @@ Intake Bundle
 
 [![Latest Stable Version](http://img.shields.io/packagist/v/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
 [![Build Status](http://img.shields.io/travis/endroid/EndroidIntakeBundle.svg)](http://travis-ci.org/endroid/EndroidIntakeBundle)
-[![Latest Stable Version](https://poser.pugx.org/endroid/intake-bundle/v/stable.png)](https://packagist.org/packages/endroid/intake-bundle)
 [![Total Downloads](http://img.shields.io/packagist/dt/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
+[![Monthly Downloads](http://img.shields.io/packagist/dm/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
 [![License](http://img.shields.io/packagist/l/endroid/intake-bundle.svg)](https://packagist.org/packages/endroid/intake-bundle)
 
 Allows creation, administration and submission of intakes to determine if a
@@ -54,9 +54,9 @@ EndroidIntakeBundle:
 
 ## Versioning
 
-Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatible
-changes will be kept to a minimum but be aware that these can occur. Lock
-your dependencies for production and test your code when upgrading.
+Version numbers follow the MAJOR.MINOR.PATCH scheme. Backwards compatibility
+breaking changes will be kept to a minimum but be aware that these can occur.
+Lock your dependencies for production and test your code when upgrading.
 
 ## License
 
