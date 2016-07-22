@@ -112,6 +112,14 @@ class IntakeController extends Controller
             foreach ($level->getTexts() as $text) {
                 $body .= '<tr><td><em>'.$text->getTitle().'</em></td></tr>';
                 $body .= '<tr><td>'.$text->getContent($user).'</td></tr>';
+                $body .= '<tr><td>&nbsp;</td></tr>';
+            }
+            if ($level->getExtrasCompleted($user)) {
+                foreach ($level->getExtras() as $index => $extra) {
+                    $body .= '<tr><td><em>Extra invulzin '.($index + 1).'</em></td></tr>';
+                    $body .= '<tr><td>'.$extra->getContent($user).'</td></tr>';
+                }
+                $body .= '<tr><td>&nbsp;</td></tr>';
             }
         }
         $body .= '</table></body>';

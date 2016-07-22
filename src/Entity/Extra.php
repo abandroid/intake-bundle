@@ -95,16 +95,26 @@ class Extra
     /**
      * Returns the content.
      *
+     * @param User $user
      * @return string
      */
-    public function getContent()
+    public function getContent(User $user = null)
     {
         $content = array();
 
         /** @var Part $part */
         foreach ($this->parts as $part) {
             if ($part instanceof QuestionPart) {
-                $content[] = '['.$part->getContent().']';
+                if ($user) {
+                    $answerContent = '(-)';
+                    $answer = $part->getAnswer($user);
+                    if ($answer instanceof Answer && $answer->getContent() !== '') {
+                        $answerContent = $answer->getContent();
+                    }
+                    $content[] = '<strong>'.$answerContent.'</strong>';
+                } else {
+                    $content[] = '['.$part->getContent().']';
+                }
             } else {
                 $content[] = $part->getContent();
             }

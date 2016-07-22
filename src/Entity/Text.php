@@ -126,6 +126,7 @@ class Text
     /**
      * Returns the content.
      *
+     * @param User $user
      * @return string
      */
     public function getContent(User $user = null)
@@ -138,8 +139,11 @@ class Text
                 if ($user) {
                     $answerContent = '(-)';
                     $answer = $part->getAnswer($user);
-                    if ($answer instanceof Answer) {
+                    if ($answer instanceof Answer && $answer->getContent() !== '') {
                         $answerContent = $answer->getContent();
+                    }
+                    if ($part->getErrorCount($user) > 0) {
+                        $answerContent = '<span style="color: red;">'.$answerContent.'</span>';
                     }
                     $content[] = '<strong>'.$answerContent.'</strong>';
                 } else {
