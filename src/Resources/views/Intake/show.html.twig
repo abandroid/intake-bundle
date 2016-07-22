@@ -28,51 +28,60 @@
     </script>
 
     <div>
-        {% set break = false %}
-        {% for level in intake.levels if not break %}
-            {% if not level.completed(app.user) %}
-                {# If level is not completed show questions #}
-                <form id="intakeForm" method="post" onsubmit="submitForm();">
-                    {% for text in level.texts %}
-                        <div class="text">
-                            <h1><span class="label label-default">Tekst {{ loop.index }}: {{ text.title }}</span></h1>
-                            <p>
-                                {% for part in text.parts %}
-                                    {% if part.type == 'question' %}
-                                        {% set answer = part.answer(app.user) %}
-                                        <input type="text" name="answers[{{ part.id }}]" value="{% if answer %}{{ answer.content }}{% endif %}" />
-                                    {% elseif part.type == 'text' %}
-                                        {{ part.content }}
-                                    {% endif %}
-                                {% endfor %}
-                            </p>
-                        </div>
-                    {% else %}
-                    {% endfor %}
+
+        {% if not level.textsCompleted(app.user) %}
+
+            <form id="intakeForm" method="post" onsubmit="submitForm();" action="{{ path('endroid_intake_intake_setanswers', { intake: intake.id, level: level.id }) }}">
+                {% for text in level.texts %}
                     <div class="text">
-                        <button type="submit" class="btn btn-default">Opslaan</button>
+                        <h1><span class="label label-default">Tekst {{ loop.index }}: {{ text.title }}</span></h1>
+                        <p>
+                            {% for part in text.parts %}
+                                {% if part.type == 'question' %}
+                                    {% set answer = part.answer(app.user) %}
+                                    <input type="text" name="answers[{{ part.id }}]" value="{% if answer %}{{ answer.content }}{% endif %}" />
+                                {% elseif part.type == 'text' %}
+                                    {{ part.content }}
+                                {% endif %}
+                            {% endfor %}
+                        </p>
                     </div>
-                </form>
-                {% set break = true %}
+                {% else %}
+                {% endfor %}
+                <div class="text">
+                    <button type="submit" class="btn btn-default">Opslaan</button>
+                </div>
+            </form>
 
-            {% else %}
+        {% elseif not level.extrasCompleted(app.user) %}
 
-                {% if level.score(app.user) < 22 %}
-                    {# Completed with 7 or more errors: this was the last level #}
-                    {% set break = true %}
+            <form id="intakeForm" method="post" onsubmit="submitForm();" action="{{ path('endroid_intake_intake_setanswers', { intake: intake.id, level: level.id }) }}">
+                {% for text in level.extras %}
                     <div class="text">
-                        Toets afgerond.
+                        <p>
+                            {% for part in text.parts %}
+                                {% if part.type == 'question' %}
+                                    {% set answer = part.answer(app.user) %}
+                                    <input type="text" name="answers[{{ part.id }}]" value="{% if answer %}{{ answer.content }}{% endif %}" />
+                                {% elseif part.type == 'text' %}
+                                    {{ part.content }}
+                                {% endif %}
+                            {% endfor %}
+                        </p>
                     </div>
-                    {% if level.score(app.user) > 21 %}
-                        {# Completed with 7 or 8 errors: perform additional test #}
-                        <div class="text">
-                            Extra vragen.
-                        </div>
-                    {% endif %}
-                {% endif %}
+                {% else %}
+                {% endfor %}
+                <div class="text">
+                    <button type="submit" class="btn btn-default">Opslaan</button>
+                </div>
+            </form>
 
-            {% endif %}
-        {% endfor %}
+        {% else %}
+
+            Completed all
+
+        {% endif %}
+
     </div>
 
 {% endblock %}

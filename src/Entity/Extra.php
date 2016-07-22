@@ -179,7 +179,7 @@ class Extra
      */
     public function getParts()
     {
-        return $this->parts;
+        return $this->parts->toArray();
     }
 
     /**
@@ -196,7 +196,7 @@ class Extra
                 continue;
             }
             $answer = $part->getAnswer($user);
-            if (!$answer || !$answer->getContent()) {
+            if (!$answer instanceof Answer) {
                 return false;
             }
         }

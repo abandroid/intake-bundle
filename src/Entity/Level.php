@@ -19,6 +19,11 @@ use UserBundle\Entity\User;
  */
 class Level
 {
+    const ASSESSMENT_NONE = 'none';
+    const ASSESSMENT_PASS = 'pass';
+    const ASSESSMENT_DOUBT = 'doubt';
+    const ASSESSMENT_FAIL = 'fail';
+
     /**
      * @var int
      *
@@ -230,7 +235,7 @@ class Level
      */
     public function getTexts()
     {
-        return $this->texts;
+        return $this->texts->toArray();
     }
 
     /**
@@ -271,7 +276,7 @@ class Level
      */
     public function getExtras()
     {
-        return $this->extras;
+        return $this->extras->toArray();
     }
 
     /**
@@ -299,17 +304,36 @@ class Level
     }
 
     /**
-     * Returns the completion status.
+     * Returns the texts completion status.
      *
      * @param User $user
      *
      * @return bool
      */
-    public function getCompleted(User $user)
+    public function getTextsCompleted(User $user)
     {
         /** @var Text $text */
         foreach ($this->texts as $text) {
             if (!$text->getCompleted($user)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the extras completion status.
+     *
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function getExtrasCompleted(User $user)
+    {
+        /** @var Extra $extra */
+        foreach ($this->extras as $extra) {
+            if (!$extra->getCompleted($user)) {
                 return false;
             }
         }
@@ -337,15 +361,27 @@ class Level
     }
 
     /**
-     * Determines if this level was successfully completed.
+     * Returns the assessment.
      *
      * @param User $user
      *
-     * @return bool
+     * @return string
      */
-    public function getSuccess(User $user)
+    public function getAssessment(User $user)
     {
-        return $this->getErrorCount($user) <= $this->maxErrors;
+        if (!$this->getTextsCompleted($user)) {
+            return self::ASSESSMENT_NONE;
+        }
+
+        $count = $this->getErrorCount($user);
+
+        if ($count < $this->doubtErrorCount) {
+            return self::ASSESSMENT_PASS;
+        } elseif ($count < $this->failureErrorCount) {
+            return self::ASSESSMENT_DOUBT;
+        } else {
+            return self::ASSESSMENT_FAIL;
+        }
     }
 
     /**

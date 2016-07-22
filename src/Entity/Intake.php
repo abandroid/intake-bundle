@@ -151,7 +151,7 @@ class Intake
      */
     public function getLevels()
     {
-        return $this->levels;
+        return $this->levels->toArray();
     }
 
     /**

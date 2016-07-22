@@ -128,14 +128,23 @@ class Text
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(User $user = null)
     {
         $content = array();
 
         /** @var Part $part */
         foreach ($this->parts as $part) {
             if ($part instanceof QuestionPart) {
-                $content[] = '['.$part->getContent().']';
+                if ($user) {
+                    $answerContent = '(-)';
+                    $answer = $part->getAnswer($user);
+                    if ($answer instanceof Answer) {
+                        $answerContent = $answer->getContent();
+                    }
+                    $content[] = '<strong>'.$answerContent.'</strong>';
+                } else {
+                    $content[] = '['.$part->getContent().']';
+                }
             } else {
                 $content[] = $part->getContent();
             }
@@ -209,7 +218,7 @@ class Text
      */
     public function getParts()
     {
-        return $this->parts;
+        return $this->parts->toArray();
     }
 
     /**
@@ -226,7 +235,7 @@ class Text
                 continue;
             }
             $answer = $part->getAnswer($user);
-            if (!$answer || !$answer->getContent()) {
+            if (!$answer instanceof Answer) {
                 return false;
             }
         }

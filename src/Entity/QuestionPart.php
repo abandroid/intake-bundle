@@ -99,7 +99,7 @@ class QuestionPart extends Part
      */
     public function getAnswers()
     {
-        return $this->answers;
+        return $this->answers->toArray();
     }
 
     /**
