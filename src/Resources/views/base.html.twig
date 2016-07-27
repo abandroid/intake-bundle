@@ -1,37 +1,37 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="theme-color" content="#333333">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bundled.min.css') }}">
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
-        {{ google_analytics_tracker('default') }}
-    </head>
-    <body>
-        {% block body %}
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">
-                            {% block intake_title %}Intake{% endblock %}
-                        </a>
-                    </div>
-                </div>
-            </nav>
-            {% for flash_message in app.session.flashBag.get('notice') %}
-                <div class="alert alert-success">
-                    {{ flash_message }}
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                </div>
-            {% endfor %}
-            {% block content %}{% endblock %}
-        {% endblock %}
-        {% block javascripts %}
-            <script src="{{ asset('assets/js/bundled.min.js') }}"></script>
-        {% endblock %}
-    </body>
-</html>
+{% extends 'AvanzuAdminThemeBundle:layout:default-layout.html.twig' %}
+
+{% block avanzu_document_title %}Intakes{% endblock %}
+
+{% block avanzu_logo_lg %}
+    <b>Intake</b> Companion
+{% endblock %}
+
+{% block avanzu_navbar_messages %}{% endblock %}
+{% block avanzu_navbar_notifications %}{% endblock %}
+{% block avanzu_navbar_tasks %}{% endblock %}
+{% block avanzu_navbar_user %}{% endblock %}
+
+{% block avanzu_sidebar_user %}
+    <div class="user-panel">
+        <div class="pull-left image">
+            <img src="{{ asset('bundles/avanzuadmintheme/img/avatar.png') }}" />
+        </div>
+        <div class="pull-left info">
+            <p>{{ app.user.username }}</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block avanzu_sidebar_search %}{% endblock %}
+{% block avanzu_page_subtitle %}{% endblock %}
+{% block avanzu_page_content %}{% endblock %}
+
+{% block avanzu_footer %}
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            Good luck!
+        </div>
+        <strong>Copyright &copy; {{ 'now'|date('Y') }} <a href="http://endroid.nl/">Endroid</a></strong> - All rights reserved.
+    </footer>
+{% endblock %}

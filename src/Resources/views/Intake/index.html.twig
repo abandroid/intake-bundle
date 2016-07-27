@@ -1,11 +1,18 @@
 {% extends 'EndroidIntakeBundle::base.html.twig' %}
 
-{% block title %}Intakes{% endblock %}
+{% block avanzu_page_title %}Intakes{% endblock %}
 
-{% block content %}
+{% block avanzu_page_content %}
 
     {% for intake in intakes %}
-        <a href="{{ path('endroid_intake_intake_show', { intake: intake.id }) }}" class="btn btn-default">{{ intake.name }}</a>
+        {% embed 'AvanzuAdminThemeBundle:Widgets:box-widget.html.twig' %}
+            {% block box_title %}
+                {{ intake.name }}
+            {% endblock %}
+            {% block box_body %}
+                <a class="btn btn-primary" href="{{ path('endroid_intake_intake_show', { intake: intake.id }) }}" role="button">Start</a>
+            {% endblock %}
+        {% endembed %}
     {% endfor %}
 
 {% endblock %}
