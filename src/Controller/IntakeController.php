@@ -20,7 +20,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @Security("has_role('ROLE_INTAKE')")
@@ -30,6 +31,8 @@ class IntakeController extends Controller
     /**
      * @Route("/")
      * @Template()
+     *
+     * @return array
      */
     public function indexAction()
     {
@@ -43,18 +46,18 @@ class IntakeController extends Controller
     /**
      * @Route("/{intake}")
      * @Template()
+     *
+     * @param Intake        $intake
+     * @param UserInterface $user
+     *
+     * @return array
      */
-    public function showAction(Intake $intake)
+    public function showAction(Intake $intake, UserInterface $user)
     {
-        $user = $this->getUser();
-
         $level = null;
         $lastLevel = null;
         foreach ($intake->getLevels() as $level) {
-            if (!$level->getTextsCompleted($user) || !$level->getExtrasCompleted($user)) {
-                break;
-            }
-            if ($level->getTextsCompleted($user) && $level->getExtrasCompleted($user)) {
+            if (!$level->getCompleted($user)) {
                 break;
             }
         }
@@ -68,10 +71,16 @@ class IntakeController extends Controller
     /**
      * @Route("/{intake}/level/{level}/set-answers")
      * @Template()
+     *
+     * @param Request       $request
+     * @param UserInterface $user
+     * @param Level         $level
+     * @param Intake        $intake
+     *
+     * @return Response
      */
-    public function setAnswersAction(Request $request, Level $level, Intake $intake)
+    public function setAnswersAction(Request $request, UserInterface $user, Level $level, Intake $intake)
     {
-        $user = $this->getUser();
         $answers = (array) $request->request->get('answers');
 
         foreach ($answers as $questionId => $answerContent) {
@@ -90,7 +99,7 @@ class IntakeController extends Controller
 
         // Mail after flush to avoid loss of answers due to mail issues
         if ($level->getTextsCompleted($user) && $level->getExtrasCompleted($user)) {
-            $this->sendSummary($intake);
+            $this->sendSummary($user, $intake);
         }
 
         return $this->redirect($this->generateUrl('endroid_intake_intake_show', array('intake' => $intake->getId())));
@@ -99,13 +108,11 @@ class IntakeController extends Controller
     /**
      * Sends the summary.
      *
-     * @param Intake $intake
+     * @param Intake        $intake
+     * @param UserInterface $user
      */
-    protected function sendSummary(Intake $intake)
+    protected function sendSummary(UserInterface $user, Intake $intake)
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
         $body = '<html><body><table>';
         foreach ($intake->getLevels() as $level) {
             $body .= '<tr><td><strong>'.$level->getName().': '.$level->getAssessment($user).'</strong></td></tr>';
@@ -116,7 +123,7 @@ class IntakeController extends Controller
             }
             if ($level->getExtrasCompleted($user)) {
                 foreach ($level->getExtras() as $index => $extra) {
-                    $body .= '<tr><td><em>Extra invulzin '.($index + 1).'</em></td></tr>';
+                    $body .= '<tr><td><em>Extra aanvulzin '.($index + 1).'</em></td></tr>';
                     $body .= '<tr><td>'.$extra->getContent($user).'</td></tr>';
                 }
                 $body .= '<tr><td>&nbsp;</td></tr>';

@@ -11,7 +11,7 @@ namespace Endroid\Bundle\IntakeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use UserBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
@@ -105,11 +105,11 @@ class QuestionPart extends Part
     /**
      * Returns the answer for the given user.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return Answer
      */
-    public function getAnswer(User $user)
+    public function getAnswer(UserInterface $user)
     {
         /** @var Answer $answer */
         foreach ($this->answers as $answer) {
@@ -124,11 +124,11 @@ class QuestionPart extends Part
     /**
      * Returns the error count for the given user.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return int
      */
-    public function getErrorCount(User $user)
+    public function getErrorCount(UserInterface $user)
     {
         $answer = $this->getAnswer($user);
 

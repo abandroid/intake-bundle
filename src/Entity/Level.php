@@ -11,7 +11,7 @@ namespace Endroid\Bundle\IntakeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use UserBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
@@ -304,15 +304,38 @@ class Level
     }
 
     /**
-     * Returns the texts completion status.
+     * Returns the completion status.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      */
-    public function getTextsCompleted(User $user)
+    public function getCompleted(UserInterface $user)
     {
-        /** @var Text $text */
+        $textsCompleted = $this->getTextsCompleted($user);
+
+        if (!$textsCompleted) {
+            return false;
+        }
+
+        $assessment = $this->getAssessment($user);
+
+        if ($assessment == self::ASSESSMENT_FAIL) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the texts completion status.
+     *
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    public function getTextsCompleted(UserInterface $user)
+    {
         foreach ($this->texts as $text) {
             if (!$text->getCompleted($user)) {
                 return false;
@@ -325,13 +348,12 @@ class Level
     /**
      * Returns the extras completion status.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      */
-    public function getExtrasCompleted(User $user)
+    public function getExtrasCompleted(UserInterface $user)
     {
-        /** @var Extra $extra */
         foreach ($this->extras as $extra) {
             if (!$extra->getCompleted($user)) {
                 return false;
@@ -344,15 +366,14 @@ class Level
     /**
      * Returns the error count.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return int
      */
-    public function getErrorCount(User $user)
+    public function getErrorCount(UserInterface $user)
     {
         $count = 0;
 
-        /** @var Text $text */
         foreach ($this->texts as $text) {
             $count += $text->getErrorCount($user);
         }
@@ -363,11 +384,11 @@ class Level
     /**
      * Returns the assessment.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return string
      */
-    public function getAssessment(User $user)
+    public function getAssessment(UserInterface $user)
     {
         if (!$this->getTextsCompleted($user)) {
             return self::ASSESSMENT_NONE;

@@ -10,7 +10,7 @@
 namespace Endroid\Bundle\IntakeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use UserBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
@@ -42,7 +42,7 @@ class Answer
     protected $part;
 
     /**
-     * @var User
+     * @var UserInterface
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="answers")
      */
@@ -109,11 +109,11 @@ class Answer
     /**
      * Sets the user.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return $this
      */
-    public function setUser(User $user)
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
 
@@ -123,7 +123,7 @@ class Answer
     /**
      * Returns the user.
      *
-     * @return User
+     * @return UserInterface
      */
     public function getUser()
     {

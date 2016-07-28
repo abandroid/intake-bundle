@@ -11,7 +11,7 @@ namespace Endroid\Bundle\IntakeBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use UserBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
@@ -126,10 +126,11 @@ class Text
     /**
      * Returns the content.
      *
-     * @param User $user
+     * @param UserInterface $user
+     *
      * @return string
      */
-    public function getContent(User $user = null)
+    public function getContent(UserInterface $user = null)
     {
         $content = array();
 
@@ -228,11 +229,11 @@ class Text
     /**
      * Returns the completion status.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return bool
      */
-    public function getCompleted(User $user)
+    public function getCompleted(UserInterface $user)
     {
         foreach ($this->parts as $part) {
             if (!$part instanceof QuestionPart) {
@@ -250,11 +251,11 @@ class Text
     /**
      * Returns the error count.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return int
      */
-    public function getErrorCount(User $user)
+    public function getErrorCount(UserInterface $user)
     {
         $count = 0;
 
