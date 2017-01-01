@@ -54,7 +54,7 @@ class QuestionPart extends Part
         parent::setContent($content);
 
         $this->choices = explode(',', $this->content);
-        $this->choices = array_map(array($this, 'simplify'), $this->choices);
+        $this->choices = array_map([$this, 'simplify'], $this->choices);
 
         return $this;
     }

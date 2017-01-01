@@ -23,46 +23,46 @@ class LevelAdmin extends BaseAdmin
         $formMapper
             ->with('General')
                 ->add('name')
-                ->add('doubtErrorCount', null, array('label' => 'Errors for doubt'))
-                ->add('failureErrorCount', null, array('label' => 'Errors for failure'))
-                ->add('texts', 'sonata_type_collection', array(
-                    'type_options' => array(
+                ->add('doubtErrorCount', null, ['label' => 'Errors for doubt'])
+                ->add('failureErrorCount', null, ['label' => 'Errors for failure'])
+                ->add('texts', 'sonata_type_collection', [
+                    'type_options' => [
                         'delete' => false,
-                        'delete_options' => array(
+                        'delete_options' => [
                             'type' => 'hidden',
-                            'type_options' => array(
+                            'type_options' => [
                                 'mapped' => false,
                                 'required' => false,
-                            ),
-                        ),
-                    ),
+                            ],
+                        ],
+                    ],
                     'label' => 'Texts',
                     'required' => false,
                     'by_reference' => false,
-                ), array(
+                ], [
                     'edit' => 'inline',
                     'inline' => 'table',
                     'sortable' => 'position',
-                ))
-            ->add('extras', 'sonata_type_collection', array(
-                'type_options' => array(
+                ])
+            ->add('extras', 'sonata_type_collection', [
+                'type_options' => [
                     'delete' => false,
-                    'delete_options' => array(
+                    'delete_options' => [
                         'type' => 'hidden',
-                        'type_options' => array(
+                        'type_options' => [
                             'mapped' => false,
                             'required' => false,
-                        ),
-                    ),
-                ),
+                        ],
+                    ],
+                ],
                 'label' => 'Extras',
                 'required' => false,
                 'by_reference' => false,
-            ), array(
+            ], [
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable' => 'position',
-            ))
+            ])
             ->end()
         ;
     }

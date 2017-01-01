@@ -38,9 +38,9 @@ class IntakeController extends Controller
     {
         $intakes = $this->getIntakeRepository()->findAll();
 
-        return array(
+        return [
             'intakes' => $intakes,
-        );
+        ];
     }
 
     /**
@@ -62,10 +62,10 @@ class IntakeController extends Controller
             }
         }
 
-        return array(
+        return [
             'intake' => $intake,
             'level' => $level,
-        );
+        ];
     }
 
     /**
@@ -84,7 +84,7 @@ class IntakeController extends Controller
         $answers = (array) $request->request->get('answers');
 
         foreach ($answers as $questionId => $answerContent) {
-            $question = $this->getPartRepository()->findOneBy(array('id' => $questionId));
+            $question = $this->getPartRepository()->findOneBy(['id' => $questionId]);
             $answer = $question->getAnswer($user);
             if (!$answer) {
                 $answer = new Answer();
@@ -102,7 +102,7 @@ class IntakeController extends Controller
             $this->sendSummary($user, $intake);
         }
 
-        return $this->redirect($this->generateUrl('endroid_intake_intake_show', array('intake' => $intake->getId())));
+        return $this->redirect($this->generateUrl('endroid_intake_intake_show', ['intake' => $intake->getId()]));
     }
 
     /**

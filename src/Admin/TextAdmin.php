@@ -22,7 +22,7 @@ class TextAdmin extends BaseAdmin
         $formMapper
             ->with('General')
                 ->add('title')
-                ->add('content', 'textarea', array('attr' => array('rows' => 5, 'cols' => 150)))
+                ->add('content', 'textarea', ['attr' => ['rows' => 5, 'cols' => 150]])
             ->end()
         ;
     }

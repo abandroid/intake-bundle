@@ -79,7 +79,7 @@ class LoadIntakeData extends AbstractFixture implements ContainerAwareInterface,
         for ($n = 1; $n <= 3; ++$n) {
             $content = implode(' ', $faker->words(6));
             for ($i = 0; $i < 10; ++$i) {
-                $answers = array();
+                $answers = [];
                 for ($a = 1; $a <= 3; ++$a) {
                     $answers[] = 'answer'.$a;
                 }

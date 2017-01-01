@@ -101,7 +101,7 @@ class Text
      */
     public function setContent($content)
     {
-        $parts = array();
+        $parts = [];
 
         $contents = preg_split('#(\[.*?\])#', $content, null, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -132,7 +132,7 @@ class Text
      */
     public function getContent(UserInterface $user = null)
     {
-        $content = array();
+        $content = [];
 
         /** @var Part $part */
         foreach ($this->parts as $part) {
